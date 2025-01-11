@@ -2,53 +2,29 @@ package model;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Show {
 
-    public User showUser() {
+    public List<User> showUser() {
         Config config = new Config();
-        User user = new User();
+        List<User> users = new ArrayList<>();
         String query = "SELECT * FROM users";
 
         try(Statement statement = config.getConnection().createStatement();
-            ResultSet res = statement.executeQuery(query)) {
-
-            if(res.next()) {
+            ResultSet res = statement.executeQuery(query);) {
+            while(res.next()) {
+                User user = new User();
                 user.setUsername(res.getString("username"));
-            } else {
-                System.out.println("No user found");
-                return null;
+                users.add(user);
             }
 
-            return user;
         } catch (Exception e) {
             System.out.println("Error found");
             e.printStackTrace();
-            return null;
         }
-    }
 
-
-    public User showUser(int id) {
-        Config config = new Config();
-        User user = new User();
-        String query = "SELECT * FROM users WHERE id = " + id;
-
-        try(Statement statement = config.getConnection().createStatement();
-            ResultSet res = statement.executeQuery(query)) {
-
-            if(res.next()) {
-                user.setUsername(res.getString("username"));
-            } else {
-                System.out.println("No user found");
-                return null;
-            }
-
-            return user;
-        } catch (Exception e) {
-            System.out.println("Error found");
-            e.printStackTrace();
-            return null;
-        }
+        return users;
     }
 }

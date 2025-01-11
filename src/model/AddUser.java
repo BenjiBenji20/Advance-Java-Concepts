@@ -1,28 +1,24 @@
 package model;
 
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.util.Scanner;
 
 public class AddUser {
     Config config = new Config();
 
-    public void addUser(String username) {
-        try {
-            Scanner input = new Scanner(System.in);
+    public void addUser(Scanner input) {
+        //  Insert new value to the database
+        String query = "INSERT INTO " +
+                "users (username) VALUES " +
+                "(?)";
 
+        try(PreparedStatement preparedStatement = config.getConnection().prepareStatement(query)) {
             System.out.println("Add account here: ");
             boolean isAdding = true;
             while(isAdding) {
                 System.out.print("Username: ");
                 String newUser = input.nextLine().trim();
 
-                //  Insert new value to the database
-                String query = "INSERT INTO " +
-                        "users (username) VALUES " +
-                        "(?)";
-
-                PreparedStatement preparedStatement = config.getConnection().prepareStatement(query);
                 preparedStatement.setString(1, newUser);
                 int rows = preparedStatement.executeUpdate();
 
@@ -31,10 +27,6 @@ public class AddUser {
                 if(!action.equalsIgnoreCase("Yes")) {
                     System.out.println("Row/s affected: " + rows);
                     isAdding = false;
-
-                    // Closing resources
-                    preparedStatement.close();
-                    input.close();
                 }
             }
         }
@@ -42,6 +34,5 @@ public class AddUser {
             System.out.println("Error found");
             e.printStackTrace();
         }
-
     }
 }

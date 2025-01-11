@@ -21,6 +21,8 @@ public class ConfigConnection {
                 );
             }
 
+            res.close();
+            statement.close();
             conn.close();
         }
         catch (Exception e) {

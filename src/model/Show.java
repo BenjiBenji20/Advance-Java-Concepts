@@ -26,6 +26,29 @@ public class Show {
             e.printStackTrace();
             return null;
         }
+    }
 
+
+    public User showUser(int id) {
+        Config config = new Config();
+        User user = new User();
+        String query = "SELECT * FROM users WHERE id = " + id;
+
+        try(Statement statement = config.getConnection().createStatement();
+            ResultSet res = statement.executeQuery(query)) {
+
+            if(res.next()) {
+                user.setUsername(res.getString("username"));
+            } else {
+                System.out.println("No user found");
+                return null;
+            }
+
+            return user;
+        } catch (Exception e) {
+            System.out.println("Error found");
+            e.printStackTrace();
+            return null;
+        }
     }
 }

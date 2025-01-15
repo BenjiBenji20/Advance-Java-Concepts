@@ -642,3 +642,17 @@
 0:0:0:0:0:0:0:1 - - [15/Jan/2025:13:36:25 +0800] "GET /RegistrationServletAndJDBCProj/registration.html? HTTP/1.1" 304 -
 0:0:0:0:0:0:0:1 - - [15/Jan/2025:13:36:40 +0800] "GET /RegistrationServletAndJDBCProj/registration.html? HTTP/1.1" 304 -
 0:0:0:0:0:0:0:1 - - [15/Jan/2025:13:37:16 +0800] "GET /RegistrationServletAndJDBCProj/registration.html? HTTP/1.1" 200 2977
+0:0:0:0:0:0:0:1 - - [15/Jan/2025:13:50:01 +0800] "GET /RegistrationServletAndJDBCProj/registration.html? HTTP/1.1" 200 2985
+127.0.0.1 - - [15/Jan/2025:13:50:01 +0800] "GET /RegistrationServletAndJDBCProj/images/java-icon.png HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [15/Jan/2025:13:50:01 +0800] "GET /RegistrationServletAndJDBCProj/styles/style.css HTTP/1.1" 200 2236
+0:0:0:0:0:0:0:1 - - [15/Jan/2025:13:50:01 +0800] "GET /RegistrationServletAndJDBCProj/images/coffee-bg.jpg HTTP/1.1" 304 -
+127.0.0.1 - - [15/Jan/2025:14:15:59 +0800] "GET / HTTP/1.1" 404 683
+0:0:0:0:0:0:0:1 - - [15/Jan/2025:14:34:23 +0800] "GET /RegistrationServletAndJDBCProj/registration.html? HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [15/Jan/2025:14:34:24 +0800] "GET /RegistrationServletAndJDBCProj/styles/style.css HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [15/Jan/2025:14:34:24 +0800] "GET /RegistrationServletAndJDBCProj/images/java-icon.png HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [15/Jan/2025:14:35:00 +0800] "POST /RegistrationServletAndJDBCProj/user-registration HTTP/1.1" 200 -
+0:0:0:0:0:0:0:1 - - [15/Jan/2025:14:36:02 +0800] "GET /RegistrationServletAndJDBCProj/registration.html? HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [15/Jan/2025:14:36:17 +0800] "POST /RegistrationServletAndJDBCProj/user-registration HTTP/1.1" 200 -
+0:0:0:0:0:0:0:1 - - [15/Jan/2025:14:40:49 +0800] "GET /RegistrationServletAndJDBCProj/registration.html? HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [15/Jan/2025:14:40:49 +0800] "GET /RegistrationServletAndJDBCProj/styles/style.css HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [15/Jan/2025:14:40:58 +0800] "POST /RegistrationServletAndJDBCProj/user-registration HTTP/1.1" 200 -

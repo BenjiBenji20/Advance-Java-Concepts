@@ -5,7 +5,7 @@ CREATE TABLE users (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     complete_name NVARCHAR(255) NOT NULL,
     username NVARCHAR(255) NOT NULL,
-    password NVARCHAR(50) NOT NULL
+    password NVARCHAR(255) NOT NULL
 );
 
 INSERT INTO users (complete_name, username, password)

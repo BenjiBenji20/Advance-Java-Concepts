@@ -2,6 +2,6 @@
 <Context docBase="C:/Users/imper/Documents/Java_Projects/RegistrationServletAndJDBCProj/src/main/webapp">
   <Resources cacheMaxSize="10240">
     <PreResources base="C:/Users/imper/Documents/Java_Projects/RegistrationServletAndJDBCProj/target/classes" className="org.apache.catalina.webresources.DirResourceSet" webAppMount="/WEB-INF/classes"/>
-    <PostResources base="C:/Users/imper/Documents/Java_Projects/RegistrationServletAndJDBCProj/lib/mysql-connector-j-9.1.0.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/mysql-connector-j-9.1.0.jar"/>
+    <PostResources base="C:/Users/imper/.m2/repository/org/mindrot/jbcrypt/0.4/jbcrypt-0.4.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/jbcrypt-0.4.jar"/>
   </Resources>
 </Context>

@@ -1,0 +1,136 @@
+body {
+  background-color: #1e1e2f;
+  font-family: sans-serif;
+  color: #ffff;
+}
+
+.navbar {
+  padding: 0;  
+}
+.container-fluid {
+  background-color: #1e1e2f;
+  padding: 20px 50px;
+}
+
+.title-icon {
+  width: 12%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 700;
+}
+.title-icon a {
+  color: #cbcbcb;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.title-icon a:hover {
+  color: #007bff;
+}
+.image-icon {
+  border-radius: 50%;
+  width: 80px;
+}
+
+.navbar-nav {
+  width: 40%;
+  display: flex;
+  justify-content: space-around;
+}
+.navbar-nav .nav-link {
+  font-weight: 600;
+}
+
+/* Active link */
+.navbar-nav .nav-link.active {
+  color: #cbcbcb;
+  cursor: pointer;
+}
+
+/* Disabled link */
+.navbar-nav .nav-link.disabled {
+  color: #6c757d;
+  pointer-events: none;
+  cursor: default;
+}
+
+main {
+  height: 82.5vh;
+  display: flex;
+}
+
+.background-section {
+  width: 50%; /* Takes the remaining width */
+  background: linear-gradient(to right, rgb(30, 30, 45), 
+    rgba(0, 0, 0, 0.6)),
+    url('../images/coffee-bg.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.background-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgb(30, 30, 50), 
+  rgba(0, 0, 0, 0)); /* Fade to transparent */
+  pointer-events: none; /* Allow clicks through the gradient */
+}
+
+form {
+  width: 50%;
+  padding: 100px 80px;
+}
+
+.form-header {
+  font-weight: 700;
+  font-size: 2.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.copy-right {
+  display: flex;
+  flex-direction: row;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.copy-right > div {
+  font-size: 8px;
+}
+
+.suggestion {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.suggestion a {
+  text-decoration: none;
+}
+
+.input-field {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  height: 70%;
+  justify-content: space-between;
+}
+
+.input-field input, button {
+  height: 50px;
+  border-radius: 20px;
+}
+
+.input-field input {
+  padding-left: 20px;
+}
+
+.input-group a {
+  text-decoration: none;
+  color: black;
+}

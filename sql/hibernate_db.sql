@@ -15,3 +15,5 @@ INSERT INTO
 	VALUES ('qwerty', 'Benji C', 'qwerty123');
     
 SELECT * FROM users;
+
+SHOW TABLES;

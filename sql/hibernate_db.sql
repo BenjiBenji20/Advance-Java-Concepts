@@ -16,4 +16,8 @@ INSERT INTO
     
 SELECT * FROM users;
 
+-- DROP TABLE myfriends;
+
+SELECT * FROM myfriends;
+
 SHOW TABLES;

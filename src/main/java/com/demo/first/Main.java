@@ -9,7 +9,9 @@ package com.demo.first;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
 public class Main {
 
@@ -28,17 +30,21 @@ public class Main {
                 .configure()
                 .addAnnotatedClass(MyFriends.class);
 
-        // Session faction
-        try (SessionFactory sf = config.buildSessionFactory();
+        try (
+             ServiceRegistry registry = new StandardServiceRegistryBuilder()
+                    .configure()
+                    .build();
+             SessionFactory sf = config.buildSessionFactory(registry);
              Session session = sf.openSession();
         ) {
             Transaction transaction = session.beginTransaction();
 
             MyFriends mf = new MyFriends();
-            mf.setId(2);
-            mf.setName("Kate");
+            mf.setId(1);
+            mf.setName("Vanessa");
             mf.setAge(22);
             mf.setGender("Female");
+
 
             // save the table or query to the db
             session.save(mf);

@@ -24,9 +24,12 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
-        <property name="hibernate.transaction.jta.platform">org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform</property>
+        <property name="hibernate.transaction.jta.platform">
+            org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform
+        </property>
 
         <!--    Mapping class here    -->
+<!--        <property name="hbm2ddl.auto">create</property>-->
         <mapping class="com.demo.first.MyFriends"/>
     </session-factory>
 </hibernate-configuration>

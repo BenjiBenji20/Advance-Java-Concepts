@@ -52,4 +52,15 @@ public class MyFriends {
     public void setName(String name) {
         this.name = name;
     }
+
+    // for fetching data using session.get();
+    @Override
+    public String toString() {
+        return "MyFriends{" +
+                "id=" + id +
+                ", age=" + age +
+                ", gender='" + gender + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

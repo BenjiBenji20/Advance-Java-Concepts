@@ -47,10 +47,15 @@ public class Main {
 
 
             // save the table or query to the db
-            session.save(mf);
+            // session.save(mf);
+
+            // fetching data
+            MyFriends mf2 = (MyFriends) session.get(MyFriends.class, 1);
 
             // commit a transaction
             transaction.commit();
+
+            System.out.println(mf2);
         }
         catch (Exception e) {
             System.out.println("Error: " + e.getMessage());

@@ -16,7 +16,6 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello World");
 
-        MyFriends mf = new MyFriends();
 
         // configuring your class to your hibernate.cfg.xml
         /**
@@ -34,6 +33,12 @@ public class Main {
              Session session = sf.openSession();
         ) {
             Transaction transaction = session.beginTransaction();
+
+            MyFriends mf = new MyFriends();
+            mf.setId(2);
+            mf.setName("Kate");
+            mf.setAge(22);
+            mf.setGender("Female");
 
             // save the table or query to the db
             session.save(mf);

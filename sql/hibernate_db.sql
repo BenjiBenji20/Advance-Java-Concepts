@@ -20,4 +20,6 @@ SELECT * FROM users;
 
 SELECT * FROM myfriends;
 
+SELECT * FROM mgakaibigan;
+
 SHOW TABLES;

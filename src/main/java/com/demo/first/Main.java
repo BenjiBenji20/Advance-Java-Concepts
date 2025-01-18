@@ -40,17 +40,17 @@ public class Main {
             Transaction transaction = session.beginTransaction();
 
             MyFriends mf = new MyFriends();
-            mf.setId(1);
-            mf.setName("Vanessa");
-            mf.setAge(22);
-            mf.setGender("Female");
+            mf.setId(3);
+            mf.setName("Jaime");
+            mf.setAge(23);
+            mf.setGender("Male");
 
 
             // save the table or query to the db
-            // session.save(mf);
+             session.save(mf);
 
             // fetching data
-            MyFriends mf2 = (MyFriends) session.get(MyFriends.class, 1);
+            MyFriends mf2 = (MyFriends) session.get(MyFriends.class, 2);
 
             // commit a transaction
             transaction.commit();

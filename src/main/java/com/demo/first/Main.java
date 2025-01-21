@@ -37,22 +37,22 @@ public class Main {
             Transaction transaction = session.beginTransaction();
 
             FriendsName friendsName = new FriendsName();
-            friendsName.setFirstName("Jaime");
-            friendsName.setLastName("Manalastas");
-            friendsName.setMiddleName("Salzos");
+            friendsName.setFirstName("Kate");
+            friendsName.setLastName("Marcos");
+            friendsName.setMiddleName("Gernale");
 
             MyFriends mf = new MyFriends();
-            mf.setId(5);
+            mf.setId(7);
             mf.setName(friendsName);
-            mf.setAge(23);
-            mf.setGender("Male");
+            mf.setAge(21);
+            mf.setGender("Female");
 
 
             // save the table or query to the db
-            //session.save(mf);
+            // session.save(mf);
 
             // fetching data
-            MyFriends mf2 = (MyFriends) session.get(MyFriends.class, 5);
+            MyFriends mf2 = (MyFriends) session.get(MyFriends.class, 7);
 
             // commit a transaction
             transaction.commit();

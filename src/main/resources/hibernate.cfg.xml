@@ -28,8 +28,12 @@
             org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform
         </property>
 
+        <!-- Schema update -->
+<!--        <property name="hbm2ddl.auto">validate</property>-->
+
         <!--    Mapping class here    -->
-<!--        <property name="hbm2ddl.auto">create</property>-->
         <mapping class="com.demo.first.MyFriends"/>
+        <mapping class="com.demo.mapping.relationship.Student"/>
+        <mapping class="com.demo.mapping.relationship.Laptop"/>
     </session-factory>
 </hibernate-configuration>

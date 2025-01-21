@@ -16,9 +16,6 @@ import org.hibernate.service.ServiceRegistry;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Hello World");
-
-
         // configuring your class to your hibernate.cfg.xml
         /**
          * Configuration class belongs to org.hibernate.cfg.Configuration
@@ -39,18 +36,23 @@ public class Main {
         ) {
             Transaction transaction = session.beginTransaction();
 
+            FriendsName friendsName = new FriendsName();
+            friendsName.setFirstName("Jaime");
+            friendsName.setLastName("Manalastas");
+            friendsName.setMiddleName("Salzos");
+
             MyFriends mf = new MyFriends();
-            mf.setId(3);
-            mf.setName("Jaime");
+            mf.setId(5);
+            mf.setName(friendsName);
             mf.setAge(23);
             mf.setGender("Male");
 
 
             // save the table or query to the db
-             session.save(mf);
+            //session.save(mf);
 
             // fetching data
-            MyFriends mf2 = (MyFriends) session.get(MyFriends.class, 2);
+            MyFriends mf2 = (MyFriends) session.get(MyFriends.class, 5);
 
             // commit a transaction
             transaction.commit();

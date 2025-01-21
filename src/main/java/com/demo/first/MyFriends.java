@@ -19,7 +19,7 @@ public class MyFriends {
     private String gender;
 
     @Column(name = "pangalan")
-    private String name;
+    private FriendsName name;
 
     public int getId() {
         return id;
@@ -45,11 +45,11 @@ public class MyFriends {
         this.gender = gender;
     }
 
-    public String getName() {
+    public FriendsName getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(FriendsName name) {
         this.name = name;
     }
 
@@ -60,7 +60,7 @@ public class MyFriends {
                 "id=" + id +
                 ", age=" + age +
                 ", gender='" + gender + '\'' +
-                ", name='" + name + '\'' +
+                ", name=" + name +
                 '}';
     }
 }

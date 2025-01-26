@@ -38,7 +38,7 @@ public class Main {
             student1.setName(name1);
 
             // establish relationship
-            laptop1.setStudent(student1);
+            laptop1.getStudent().add(student1);
             student1.getLaptops().add(laptop1);
 
             session.save(student1); // save student

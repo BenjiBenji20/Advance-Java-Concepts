@@ -11,10 +11,10 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // generate an auto-incremented primary-key column
     private int Id;
 
-    @Column(name = "Kumpletong Pangalan")
+    @Embedded
     private StudentName name;
 
-    @OneToMany(mappedBy = "student")
+    @ManyToMany
     private List<Laptop> laptops = new ArrayList<>();
 
     public StudentName getName() {

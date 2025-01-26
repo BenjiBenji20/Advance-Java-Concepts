@@ -5,10 +5,10 @@ import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class StudentName {
-    @Column(nullable = false)
+    @Column(name = "Pangalan", nullable = false)
     private String firstName;
 
-    @Column(nullable = false)
+    @Column(name = "Apelyido", nullable = false)
     private String lastName;
 
     public String getFirstName() {

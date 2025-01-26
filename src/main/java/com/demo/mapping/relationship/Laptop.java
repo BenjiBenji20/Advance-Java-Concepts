@@ -15,15 +15,15 @@ public class Laptop {
     private String brand;
     private String unit;
 
-    @ManyToOne
-    private Student student;
+    @ManyToMany(mappedBy = "laptops")
+    private List<Student> students = new ArrayList<>();
 
-    public Student getStudent() {
-        return student;
+    public List<Student> getStudent() {
+        return students;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setStudent(List<Student> students) {
+        this.students = students;
     }
 
     public String getBrand() {

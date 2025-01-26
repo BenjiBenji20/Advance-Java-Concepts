@@ -24,10 +24,13 @@ SELECT * FROM mgakaibigan;
 
 SHOW TABLES;
 
-DROP TABLE IF EXISTS student, laptop, student_laptop;
+DROP TABLE IF EXISTS student, laptop, student_laptop, laptop_student;
 
 SELECT * FROM student;
 SELECT * FROM laptop;
--- SELECT * FROM student_laptop;
+SELECT * FROM student_laptop;
+-- SELECT * FROM laptop_student;
+
+DESCRIBE student;
 
 

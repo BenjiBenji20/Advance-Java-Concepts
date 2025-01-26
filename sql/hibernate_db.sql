@@ -33,4 +33,16 @@ SELECT * FROM student_laptop;
 
 DESCRIBE student;
 
+DROP TABLE IF EXISTS customer, customer_orders;
+SELECT * FROM customer;
+SELECT * FROM customer_orders;
+
+INSERT INTO customer(name)
+VALUE('John D');
+
+INSERT INTO customer_orders(product_name)
+VALUES('T-Shir');
+
+
+
 

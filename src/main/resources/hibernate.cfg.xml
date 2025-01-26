@@ -34,5 +34,7 @@
         <mapping class="com.demo.first.MyFriends"/>
         <mapping class="com.demo.mapping.relationship.Student"/>
         <mapping class="com.demo.mapping.relationship.Laptop"/>
+        <mapping class="com.demo.fetches.Customer"/>
+        <mapping class="com.demo.fetches.Order"/>
     </session-factory>
 </hibernate-configuration>

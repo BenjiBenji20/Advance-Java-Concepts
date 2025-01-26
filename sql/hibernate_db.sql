@@ -23,3 +23,11 @@ SELECT * FROM myfriends;
 SELECT * FROM mgakaibigan;
 
 SHOW TABLES;
+
+DROP TABLE IF EXISTS student, laptop, student_laptop;
+
+SELECT * FROM student;
+SELECT * FROM laptop;
+-- SELECT * FROM student_laptop;
+
+

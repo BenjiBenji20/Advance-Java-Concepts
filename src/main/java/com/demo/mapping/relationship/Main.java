@@ -18,12 +18,12 @@ public class Main {
         try(
                 ServiceRegistry registry =
                         new StandardServiceRegistryBuilder()
-                                .configure()
-                                .build();
+                            .configure()
+                            .build();
 
                 SessionFactory sf = config.buildSessionFactory(registry);
                 Session session = sf.openSession();
-            ) {
+        ) {
             Transaction transaction = session.beginTransaction();
 
             Laptop laptop1 = new Laptop();
@@ -36,10 +36,14 @@ public class Main {
 
             Student student1 = new Student();
             student1.setName(name1);
-            student1.setLaptop(laptop1);
+
+            // establish relationship
+            laptop1.setStudent(student1);
+            student1.getLaptops().add(laptop1);
 
             session.save(student1); // save student
             session.save(laptop1); // save laptop
+
             transaction.commit();
         }
         catch (Exception e) {

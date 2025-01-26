@@ -29,7 +29,6 @@
         </property>
 
         <!-- Schema update -->
-<!--        <property name="hbm2ddl.auto">validate</property>-->
 
         <!--    Mapping class here    -->
         <mapping class="com.demo.first.MyFriends"/>

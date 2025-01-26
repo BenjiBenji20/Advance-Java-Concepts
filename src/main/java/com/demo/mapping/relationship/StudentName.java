@@ -1,10 +1,14 @@
 package com.demo.mapping.relationship;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class StudentName {
+    @Column(nullable = false)
     private String firstName;
+
+    @Column(nullable = false)
     private String lastName;
 
     public String getFirstName() {

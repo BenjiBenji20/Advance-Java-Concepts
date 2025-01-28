@@ -36,3 +36,6 @@ DESCRIBE student;
 DROP TABLE IF EXISTS customer, customer_orders;
 SELECT * FROM customer;
 SELECT * FROM customer_orders;	
+
+SELECT * FROM doctor_catmon_center;
+SELECT * FROM patient_catmor_center;

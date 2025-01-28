@@ -22,13 +22,15 @@
 
         <!-- Hibernate Settings -->
         <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <!-- Show hibernate query in console -->
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
+
         <property name="hibernate.transaction.jta.platform">
             org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform
         </property>
 
-        <!-- Schema update -->
 
         <!--    Mapping class here    -->
         <mapping class="com.demo.first.MyFriends"/>
@@ -36,5 +38,7 @@
         <mapping class="com.demo.mapping.relationship.Laptop"/>
         <mapping class="com.demo.fetches.Customer"/>
         <mapping class="com.demo.fetches.Order"/>
+        <mapping class="com.demo.hql.Doctor"/>
+        <mapping class="com.demo.hql.Patient"/>
     </session-factory>
 </hibernate-configuration>

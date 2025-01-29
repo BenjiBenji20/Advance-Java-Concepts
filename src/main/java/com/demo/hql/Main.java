@@ -9,6 +9,7 @@ import org.hibernate.query.Query;
 import org.hibernate.service.ServiceRegistry;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Main {
 
@@ -40,12 +41,40 @@ public class Main {
 
             // session.persist(doc1); // save query
 
-            Query q = session.createQuery("from Doctor");
-            List<Doctor> doctors = q.list();
+            // simple select all query
+            Query a = session.createQuery("from Patient");
+            List<Patient> patients = (List<Patient>) a.list();
 
-            for(Doctor p : doctors) {
+            for(Patient pat : patients) {
+                System.out.println(pat);
+            }
+
+
+            // HQL with parameter or prepared statement
+            int id = 1;
+
+            Query q = session.createQuery("select name, gender from Doctor where id = :id");
+            q.setParameter("id", id);
+
+            Object[] o = (Object[]) q.uniqueResult();
+
+            for(Object p : o) {
                 System.out.println(p);
             }
+
+            // using SQL aggregate functions in HQL
+            Query b = session.createQuery("SELECT COUNT(*) from Patient");
+            Long cnt = (Long) b.uniqueResult();
+
+            System.out.println("The count is: " + cnt);
+
+            // using delete statement
+            Query c = session.createQuery("DELETE FROM Patient WHERE id = :id");
+            c.setParameter("id", id);
+
+            int obj = c.executeUpdate();
+
+            System.out.println("Rows affected: " + obj);
 
             transaction.commit();
         } catch (Exception e) {

@@ -40,4 +40,21 @@ public class ProductService {
     public boolean removeProduct(int id) {
         return products.removeIf(prod -> prod.getId() == id);
     }
+
+    public boolean updateProduct(Product product) {
+        int index = 0;
+        boolean isUpdated = false;
+
+        // iterate through products list to get the matching id and perform the update
+        for(Product prod : products) {
+            if(product.getId() == prod.getId()) {
+                products.set(index, product);
+                isUpdated = true;
+                break;
+            }
+            index++;
+        }
+
+        return isUpdated;
+    }
 }

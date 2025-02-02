@@ -5,6 +5,7 @@ import com.azathoth.introToWebApp.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -19,20 +20,27 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Product getProductById(int id) {
-        return productRepository.findById(id)
-                .orElse(new Product());
+    public Optional<Product> getProductById(int id) {
+        return productRepository.findById(id);
     }
 
-    public void addProduct(Product product) {
-        productRepository.save(product);
+    public Product addProduct(Product product) {
+        return productRepository.save(product);
     }
 
-    public void removeProduct(int id) {
-        productRepository.deleteById(id);
+    public boolean removeProduct(int id) {
+        if (productRepository.existsById(id)) {
+            productRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 
-    public void updateProduct(Product product) {
-        productRepository.save(product);
+    public Optional<Product> updateProduct(Product product) {
+        if(productRepository.existsById(product.getId())) {
+            return Optional.of(productRepository.save(product)); // update product and return it into optional
+        }
+
+        return Optional.empty(); // if not found, return empty optional
     }
 }

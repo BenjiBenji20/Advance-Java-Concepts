@@ -28,17 +28,17 @@ public class ProductsController {
     }
 
     @PostMapping("/add-product")
-    public boolean addProduct(@RequestBody Product product) { // this annotation will be able the server to accept data
-        return productService.addProduct(product);
+    public void addProduct(@RequestBody Product product) { // this annotation will be able the server to accept data
+        productService.addProduct(product);
     }
 
     @DeleteMapping("/delete-product")
-    public boolean removeProduct(@RequestParam int id) {
-        return productService.removeProduct(id);
+    public void removeProduct(@RequestParam int id) {
+        productService.removeProduct(id);
     }
 
     @PutMapping("/update-product")
-    public boolean updateProduct(@RequestBody Product product) {
-        return productService.updateProduct(product);
+    public void updateProduct(@RequestBody Product product) {
+        productService.updateProduct(product);
     }
 }

@@ -1,12 +1,21 @@
 package com.azathoth.introToWebApp.model;
 
+import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
+@Entity
+@Table(name = "product")
 @Component
 public class Product {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "product_name", length = 255, nullable = false)
     private String productName;
+
+    @Column(name = "product_price", nullable = false)
     private float price;
 
     public Product(int id, String productName, float price) {
@@ -20,10 +29,6 @@ public class Product {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getProductName() {

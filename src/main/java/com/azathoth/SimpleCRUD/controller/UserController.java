@@ -7,10 +7,9 @@ import com.azathoth.SimpleCRUD.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
 @RestController
@@ -26,7 +25,7 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<?> greeting(@RequestBody UserModel newUser) {
+    public ResponseEntity<?> registerUser(@RequestBody UserModel newUser) {
         String username = newUser.getUsername().trim();
         String completeName = newUser.getCompleteName().trim();
         String password = newUser.getPassword().trim();
@@ -46,7 +45,36 @@ public class UserController {
         }
         catch(Exception e) {
             System.out.println("Error found: " + e);
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<?> userAuthentication(@RequestBody UserModel user) { // only pass username and password
+        String username = user.getUsername().trim();
+        String password = user.getPassword().trim();
+
+        try {
+            // validate user inputs
+            if(username.isEmpty() || password.isEmpty()) {
+                return new ResponseEntity<>("Input fields cannot be empty", HttpStatus.BAD_REQUEST);
+            }
+
+            // check if user is authenticated
+            Optional<UserModel> authenticatedUser = userService.userAuthentication(user.getUsername(), user.getPassword());
+
+            // if authenticated then pass http response
+            if(authenticatedUser.isPresent()) {
+                return new ResponseEntity<>(authenticatedUser.get(), HttpStatus.OK);
+            }
+            else {
+                return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
+            }
+
+        }
+        catch(Exception e) {
+            System.out.println("Error found: " + e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

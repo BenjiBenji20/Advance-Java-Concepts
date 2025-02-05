@@ -20,13 +20,17 @@ public class UserService {
     /**
      * Controller layer will pass new user
      * and using this service end point, the user's password
-     * will be hashed for security and will be save to the db
+     * will be hashed for security and will be saved to the db
      */
-    public UserModel registerUser(UserModel user) {
+    public Optional<UserModel> registerUser(UserModel user) {
+        if(userRepository.findByUsername(user.getUsername()).isPresent()) {
+            return Optional.empty();
+        }
+
         String hashedPassword = userAuth.hashPassword(user.getPassword());
         user.setPassword(hashedPassword);
 
-        return userRepository.save(user);
+        return Optional.of(userRepository.save(user));
     }
 
     /**
@@ -53,11 +57,37 @@ public class UserService {
         // check for password matching
         boolean isPasswordMatched = userAuth.compareInputPassword(plainPassword, user.getPassword());
 
-        if(isPasswordMatched) {
-            return Optional.of(user);
+        // return user data based on password matching result
+        return isPasswordMatched ? Optional.of(user) : Optional.empty();
+    }
+
+    public Optional<UserModel> updateUser(String confirmUsername, String confirmPassword,
+                                          String newCompleteName, String newUsername, String newPassword) {
+        Optional<UserModel> findUser = userRepository.findByUsername(confirmUsername);
+
+        // if the input username didn't exist in db, then return empty;
+        if(findUser.isEmpty() || userRepository.findByUsername(newUsername).isPresent()) {
+            return Optional.empty();
         }
 
-        // else, return empty
-        return  Optional.empty();
+        // extract user data if found
+        UserModel user = findUser.get();
+
+        // check for password matching
+        boolean isPasswordMatched = userAuth.compareInputPassword(confirmPassword, user.getPassword());
+
+        if(isPasswordMatched) {
+            // update user data
+            user.setCompleteName(newCompleteName);
+            user.setUsername(newUsername);
+            // hashed password
+            String hashedPassword = userAuth.hashPassword(newPassword);
+            user.setPassword(hashedPassword);
+
+            return Optional.of(userRepository.save(user));
+        }
+
+        // return user data based on password matching result
+        return Optional.empty();
     }
 }

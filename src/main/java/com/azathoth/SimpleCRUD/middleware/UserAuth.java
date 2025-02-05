@@ -26,9 +26,4 @@ public class UserAuth {
         return BCrypt.checkpw(plainPassword, hashedPassword);
     }
 
-    // checks if the user is already in the db
-    public boolean isAuthenticated(String username) {
-        return userRepository.findByUsername(username.trim()).isPresent();
-    }
-
 }

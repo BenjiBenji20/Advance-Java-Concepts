@@ -5,6 +5,7 @@ import com.azathoth.SimpleCRUD.model.UserModel;
 import com.azathoth.SimpleCRUD.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -112,6 +113,16 @@ public class UserService {
         }
 
         return false;
+    }
+
+    // get all users available in db
+    public List<UserModel> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    // Search
+    public List<UserModel> searchUser(String keyword) {
+        return userRepository.searchUser(keyword);
     }
 
 }

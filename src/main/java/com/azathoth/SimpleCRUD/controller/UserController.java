@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -165,5 +166,32 @@ public class UserController {
             System.out.println("Error found: " + e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    // get all users
+    @GetMapping("/user-list")
+    public ResponseEntity<?> getAllUsers() {
+        try {
+            List<UserModel> userList = userService.getAllUsers();
+
+            if(userList.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+
+            return new ResponseEntity<>(userList, HttpStatus.OK);
+        }
+        catch(Exception e) {
+            System.out.println("Error found: " + e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    // search users
+    @GetMapping("/user-list/search")
+    public ResponseEntity<?> searchUser(@RequestParam String keyword) {
+        List<UserModel> userList = userService.searchUser(keyword);
+
+        return new ResponseEntity<>(userList, HttpStatus.FOUND);
     }
 }

@@ -90,4 +90,28 @@ public class UserService {
         // return user data based on password matching result
         return Optional.empty();
     }
+
+    // Delete
+    public boolean deleteUser(String confirmingUsername, String confirmingPassword) {
+        Optional<UserModel> findUser = userRepository.findByUsername(confirmingUsername);
+
+        if(findUser.isEmpty()) {
+            return false;
+        }
+
+        // extract user data if found
+        UserModel user = findUser.get();
+
+        // check for password matching
+        boolean isPasswordMatched = userAuth.compareInputPassword(confirmingPassword, user.getPassword());
+
+        // delete user if password matched
+        if(isPasswordMatched) {
+            userRepository.deleteById(user.getId());
+            return true;
+        }
+
+        return false;
+    }
+
 }

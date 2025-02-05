@@ -3,14 +3,14 @@ package com.azathoth.SimpleCRUD.model;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UpdateUser {
+public class UserConfirmationSecurity {
     private String confirmingUsername;
     private String confirmingPassword;
     private String completeName;
     private String username;
     private String password;
 
-    public UpdateUser(String confirmingUsername, String confirmingPassword, String completeName, String username, String password) {
+    public UserConfirmationSecurity(String confirmingUsername, String confirmingPassword, String completeName, String username, String password) {
         this.confirmingUsername = confirmingUsername;
         this.confirmingPassword = confirmingPassword;
         this.completeName = completeName;
@@ -18,7 +18,7 @@ public class UpdateUser {
         this.password = password;
     }
 
-    public UpdateUser(){}
+    public UserConfirmationSecurity(){}
 
     public String getConfirmingUsername() {
         return confirmingUsername.trim();

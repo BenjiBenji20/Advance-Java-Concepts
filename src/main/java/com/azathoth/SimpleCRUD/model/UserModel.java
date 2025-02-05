@@ -12,7 +12,7 @@ import java.util.Date;
 public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     // automatic generate time when the user is created
     @CreationTimestamp
@@ -36,6 +36,10 @@ public class UserModel {
     }
 
     public UserModel() {}
+
+    public Long getId() {
+        return id;
+    }
 
     public String getCompleteName() {
         return completeName;

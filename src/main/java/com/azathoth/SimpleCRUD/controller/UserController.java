@@ -1,6 +1,6 @@
 package com.azathoth.SimpleCRUD.controller;
 
-import com.azathoth.SimpleCRUD.model.UpdateUser;
+import com.azathoth.SimpleCRUD.model.UserConfirmationSecurity;
 import com.azathoth.SimpleCRUD.model.UserModel;
 import com.azathoth.SimpleCRUD.service.UserService;
 
@@ -17,11 +17,11 @@ import java.util.Optional;
 public class UserController {
 
     private final UserService userService;
-    private final UpdateUser updateUser;
+    private final UserConfirmationSecurity userConfirmationSecurity;
 
-    public UserController(UserService userService, UpdateUser updateUser) {
+    public UserController(UserService userService, UserConfirmationSecurity userConfirmationSecurity) {
         this.userService = userService;
-        this.updateUser = updateUser;
+        this.userConfirmationSecurity = userConfirmationSecurity;
     }
 
     /**
@@ -99,7 +99,7 @@ public class UserController {
      * password confirmation, a new or default complete name, username and password
      */
     @PutMapping("/update")
-    public ResponseEntity<?> updateUser(@RequestBody UpdateUser updateUser) {
+    public ResponseEntity<?> updateUser(@RequestBody UserConfirmationSecurity updateUser) {
         try {
             // check for user authentication
             Optional<UserModel> authenticatedUser = userService.userAuthentication(
@@ -122,6 +122,44 @@ public class UserController {
             return optionalUser
                     .map(updatedUser -> new ResponseEntity<>(updatedUser, HttpStatus.OK))
                     .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        }
+        catch(Exception e) {
+            System.out.println("Error found: " + e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Delete
+     * This update controller receives 2 parameters: username confirmation and
+     * password confirmation. These parameters will use for user authentication
+     * inside service layer
+     *
+     */
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteUser(@RequestBody UserConfirmationSecurity deleteUser) {
+        try {
+            // check for user authentication
+            Optional<UserModel> authenticatedUser = userService.userAuthentication(
+                    deleteUser.getConfirmingUsername(),
+                    deleteUser.getConfirmingPassword()
+            );
+
+            // validate for empty response
+            if(authenticatedUser.isEmpty()) {
+                return new ResponseEntity<>("Invalid username or password", HttpStatus.CONFLICT);
+            }
+
+            // pass request to the service layer
+            boolean isUserDeleted = userService.deleteUser(
+                    deleteUser.getConfirmingUsername(),
+                    deleteUser.getConfirmingPassword()
+            );
+
+            // send response based on whether the user is deleted in service layer
+            return isUserDeleted ?
+                    new ResponseEntity<>(HttpStatus.NO_CONTENT) :
+                    new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         catch(Exception e) {
             System.out.println("Error found: " + e);

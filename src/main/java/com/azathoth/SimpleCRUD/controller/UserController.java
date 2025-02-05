@@ -24,6 +24,13 @@ public class UserController {
         this.userAuth = userAuth;
     }
 
+    /**
+     * User registration
+     * The user's username should be unique across
+     * db contents and inputs cannot be empty,
+     * otherwise this controller
+     * will send a conflict message.
+     */
     @PostMapping("/registration")
     public ResponseEntity<?> registerUser(@RequestBody UserModel newUser) {
         String username = newUser.getUsername().trim();
@@ -49,6 +56,13 @@ public class UserController {
         }
     }
 
+    /**
+     * User login using username and password as credentials passed to req body.
+     * First, this controller will check for missing input fields.
+     * Second, the  req body will pass to the service layer to check
+     * if the user is authenticated.
+     * Lastly, if the user is authenticated, then the user data will be pass as JSON
+     */
     @PostMapping("/signin")
     public ResponseEntity<?> userAuthentication(@RequestBody UserModel user) { // only pass username and password
         String username = user.getUsername().trim();

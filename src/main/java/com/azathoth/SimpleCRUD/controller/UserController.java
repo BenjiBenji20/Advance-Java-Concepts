@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @CrossOrigin(origins = "*") // allow all port origins (for front end)
@@ -21,9 +23,14 @@ public class UserController {
     private final UserService userService;
     private final UserConfirmationSecurity userConfirmationSecurity;
 
+    // making message as object to pass as api response
+    private final Map<String, String> response = new HashMap<>();
+
     public UserController(UserService userService, UserConfirmationSecurity userConfirmationSecurity) {
         this.userService = userService;
         this.userConfirmationSecurity = userConfirmationSecurity;
+
+        response.put("message", ""); // will replace value based on appropriate response
     }
 
     /**
@@ -42,17 +49,20 @@ public class UserController {
         try {
             // validate for empty fields
             if(username.isEmpty() || completeName.isEmpty() || password.isEmpty()) {
-                return new ResponseEntity<>("Input fields cannot be empty", HttpStatus.BAD_REQUEST);
+                response.replace("message", "Input fields cannot be empty");
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
 
             Optional<UserModel> registeredUser = userService.registerUser(newUser);
 
             if(registeredUser.isEmpty()) {
-                return new ResponseEntity<>("User already existed", HttpStatus.CONFLICT);
+                response.replace("message", "User already existed");
+                return new ResponseEntity<>(response, HttpStatus.CONFLICT);
             }
 
             // save new user
-            return new ResponseEntity<>("User registered successfully!", HttpStatus.CREATED);
+            response.replace("message", "User registered successfully!");
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
         }
         catch(Exception e) {
             System.out.println("Error found: " + e);
@@ -75,7 +85,8 @@ public class UserController {
         try {
             // validate user inputs
             if(username.isEmpty() || password.isEmpty()) {
-                return new ResponseEntity<>("Input fields cannot be empty", HttpStatus.BAD_REQUEST);
+                response.replace("message", "Input fields cannot be empty");
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
 
             // check if user is authenticated
@@ -86,7 +97,8 @@ public class UserController {
                 return new ResponseEntity<>(authenticatedUser.get(), HttpStatus.OK);
             }
             else {
-                return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
+                response.replace("message", "Invalid username or password");
+                return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
             }
         }
         catch(Exception e) {
@@ -111,7 +123,8 @@ public class UserController {
 
             // validate for empty response
             if(authenticatedUser.isEmpty()) {
-                return new ResponseEntity<>("Invalid username or password", HttpStatus.CONFLICT);
+                response.replace("message", "Invalid username or password");
+                return new ResponseEntity<>(response, HttpStatus.CONFLICT);
             }
 
             // pass request to the service layer
@@ -149,7 +162,8 @@ public class UserController {
 
             // validate for empty response
             if(authenticatedUser.isEmpty()) {
-                return new ResponseEntity<>("Invalid username or password", HttpStatus.CONFLICT);
+                response.replace("message", "Invalid username or password");
+                return new ResponseEntity<>(response, HttpStatus.CONFLICT);
             }
 
             // pass request to the service layer

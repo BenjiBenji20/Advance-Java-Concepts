@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*") // allow all port origins (for front end)
 @Controller
 @RestController
 @RequestMapping("/api/user")
@@ -51,7 +52,7 @@ public class UserController {
             }
 
             // save new user
-            return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
+            return new ResponseEntity<>("User registered successfully!", HttpStatus.CREATED);
         }
         catch(Exception e) {
             System.out.println("Error found: " + e);

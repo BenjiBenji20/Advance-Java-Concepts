@@ -58,11 +58,12 @@ export function homeHeaderView(userProfile) {
               <i class="bi bi-arrow-clockwise" title="update profile"></i>
             </div>
           </div>
-          <form class="d-flex" role="search id="search-form-js"">
+          <form class="d-flex" role="search" id="search-form-js">
             <input class="form-control id="search-input-js"  me-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
         </div>
+        <div id="suggestions-container-js"></div>
       </nav>
     </nav>
   `;
@@ -81,7 +82,7 @@ export function renderTable(user) {
     `;
 }
 
-export function defaultHomeview(userList) {
+export function defaultHomeView(userList) {
   homeContent += `
     <h2>User Table</h2>
         <ul class="responsive-table">
@@ -98,5 +99,41 @@ export function defaultHomeview(userList) {
 
   homeContent += `</ul>`;
   containerElement.innerHTML = homeContent;
+}
+
+export function clearSuggestion() {
+  const suggestionContainer = document.getElementById("suggestions-container-js");
+
+  if(suggestionContainer) {
+    suggestionContainer.innerHTML = ''; // clear
+    suggestionContainer.style.display = 'none'; // hide the container
+  }
+}
+
+export function displaySearchSuggestion(results) {
+  const suggestionContainer = document.getElementById("suggestions-container-js");
+  if (!suggestionContainer) {
+    console.error("Suggestion container not found");
+    return;
+  }
+
+  // add styles
+  suggestionContainer.style.display = 'flex';
+  suggestionContainer.style.flexDirection = 'row';
+  suggestionContainer.style.justifyContent = 'flex-start';
+  suggestionContainer.style.height = 'fit-content';
+  suggestionContainer.style.backgroundColor = "white";
+  suggestionContainer.style.border = "1px solid #ccc";
+  suggestionContainer.style.zIndex = "1000";
+
+  let render = '<ul>';
+  results.forEach(suggestion => {
+    render += `
+      <li>${suggestion.username}</li>
+    `;
+  });
+  render += '</ul>';
+
+  suggestionContainer.innerHTML = render;
 }
 

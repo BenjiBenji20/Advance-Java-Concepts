@@ -70,7 +70,7 @@ export class ServiceAPI {
    * SEARCH user from list
    */
   static async searchUserService(keyword) {
-    const response = await fetch(`http://localhost:8080/api/user/${keyword}`, {
+    const response = await fetch(`http://localhost:8080/api/user/search/${keyword}`, {
       headers: {"Content-Type": "application/json"},
     });
     

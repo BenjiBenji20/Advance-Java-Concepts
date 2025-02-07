@@ -1,4 +1,7 @@
-import { registrationView, authView, defaultHomeview, homeHeaderView } from '../view/view.js';
+import { registrationView, authView, 
+  defaultHomeView, homeHeaderView,
+  clearSuggestion, displaySearchSuggestion
+} from '../view/view.js';
 import { ServiceAPI } from '../service/service.js';
 
 /**
@@ -62,7 +65,7 @@ export function loginFormController() {
       else {
         alert('Login successfull!');
         homeHeaderView(result);
-        defaultHomeview(allUserData);
+        defaultHomeView(allUserData);
       }
     } 
     catch (error) {
@@ -79,7 +82,7 @@ export async function userTableController() {
     const allUserData = await ServiceAPI.getAllUsersService(); // get all users data
 
     if(allUserData) {
-      defaultHomeview(allUserData);
+      defaultHomeView(allUserData);
     } else {
       console.log('BACK TO THE REGISTER PAGE')
       loginFormController();
@@ -94,24 +97,56 @@ export async function userTableController() {
  * SEARCH controller: TYPE
  * It fetch data while typing and display fetched data to the suggestion
  */
-export function searchTypeController() {
-  document.getElementById("search-form-js").addEventListener('submit', async(e) => {
-    e.preventDefault();
+export function searchController() {
+  const searchInput = document.getElementById("search-input-js");
+  const searchForm =document.getElementById("search-form-js");
 
-    const keyword = document.getElementById("search-input-js").value.trim();
+  // handle search inputs
+  searchInput.addEventListener('input', async(e) => {
+    const keyword = searchInput.value.trim();
 
     try {
-
       // if user deleted all input type characters, then it will render the default view
       if(keyword.length === 0) {
+        clearSuggestion(); // clear suggestion container
         const allUserData = await ServiceAPI.getAllUsersService(); // get all users data
-        defaultHomeview(allUserData);
+        defaultHomeView(allUserData);
+
+        return;
       }
 
       const searchResult = await ServiceAPI.searchUserService(keyword);
-      defaultHomeview(searchResult);
+      displaySearchSuggestion(searchResult);
     } 
     catch (error) {
+      console.error("Error found: ", error);
+    }
+  });
+
+  // Handle search form submission
+  searchForm.addEventListener('submit', async (e) => {
+    e.preventDefault(); // Prevent form submission and page reload
+
+    const keyword = searchInput.value.trim();
+
+    try {
+      if (keyword.length === 0) {
+        // If the keyword is empty, fetch all users and render the default view
+        const allUserData = await ServiceAPI.getAllUsersService();
+        defaultHomeView(allUserData);
+      } else {
+        // Perform a search and display the results in the table
+        const searchResult = await ServiceAPI.searchUserService(keyword);
+
+        if (searchResult && searchResult.length > 0) {
+          defaultHomeView(searchResult); // Render the search results in the table
+        } else {
+          alert("No users found matching your search.");
+          const allUserData = await ServiceAPI.getAllUsersService();
+          defaultHomeView(allUserData); // render default home
+        }
+      }
+    } catch (error) {
       console.error("Error found: ", error);
     }
   });

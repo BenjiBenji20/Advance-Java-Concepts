@@ -1,5 +1,16 @@
+import { registrationFormController } from "../controller/controller.js";
+
+export const containerElement = document.querySelector('.container');
+
+// render default view
+defaultView();
+
+export function defaultView() {
+  registrationFormController();
+}
+
 export function registrationView() {
-  return `
+  containerElement.innerHTML =  `
     <form id="registration-form-js">
       <h3>Register Now</h3>
       <input type="text" id="complete-name" placeholder="Complete Name" required>
@@ -14,7 +25,14 @@ export function registrationView() {
   `;
 }
 
-// rennder html page
-export const containerElement = document.querySelector('.container');
+export function authView() {
+  containerElement.innerHTML =  `
+        <form id="login-form-js">
+          <h3>Login Now</h3>
+          <input type="text" id="username" placeholder="username" required>
+          <input type="password" id="password" placeholder="Password" required>
+          <input type="submit">
+      </form>
+    `;
+}
 
-containerElement.innerHTML = registrationView();

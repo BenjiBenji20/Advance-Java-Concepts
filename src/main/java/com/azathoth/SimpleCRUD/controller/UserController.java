@@ -30,7 +30,8 @@ public class UserController {
         this.userService = userService;
         this.userConfirmationSecurity = userConfirmationSecurity;
 
-        response.put("message", ""); // will replace value based on appropriate response
+        response.put("message", ""); // key value pair for non error response
+        response.put("error", "");
     }
 
     /**
@@ -49,14 +50,14 @@ public class UserController {
         try {
             // validate for empty fields
             if(username.isEmpty() || completeName.isEmpty() || password.isEmpty()) {
-                response.replace("message", "Input fields cannot be empty");
+                response.replace("error", "Input fields cannot be empty");
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
 
             Optional<UserModel> registeredUser = userService.registerUser(newUser);
 
             if(registeredUser.isEmpty()) {
-                response.replace("message", "User already existed");
+                response.replace("error", "User already existed");
                 return new ResponseEntity<>(response, HttpStatus.CONFLICT);
             }
 
@@ -77,7 +78,7 @@ public class UserController {
      * if the user is authenticated.
      * Lastly, if the user is authenticated, then the user data will be pass as JSON
      */
-    @PostMapping("/signin")
+    @PostMapping("/auth")
     public ResponseEntity<?> userAuthentication(@RequestBody UserModel user) { // only pass username and password
         String username = user.getUsername().trim();
         String password = user.getPassword().trim();
@@ -85,7 +86,7 @@ public class UserController {
         try {
             // validate user inputs
             if(username.isEmpty() || password.isEmpty()) {
-                response.replace("message", "Input fields cannot be empty");
+                response.replace("error", "Input fields cannot be empty");
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
 
@@ -97,7 +98,7 @@ public class UserController {
                 return new ResponseEntity<>(authenticatedUser.get(), HttpStatus.OK);
             }
             else {
-                response.replace("message", "Invalid username or password");
+                response.replace("error", "Invalid username or password");
                 return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
             }
         }
@@ -123,7 +124,7 @@ public class UserController {
 
             // validate for empty response
             if(authenticatedUser.isEmpty()) {
-                response.replace("message", "Invalid username or password");
+                response.replace("error", "Invalid username or password");
                 return new ResponseEntity<>(response, HttpStatus.CONFLICT);
             }
 
@@ -162,7 +163,7 @@ public class UserController {
 
             // validate for empty response
             if(authenticatedUser.isEmpty()) {
-                response.replace("message", "Invalid username or password");
+                response.replace("error", "Invalid username or password");
                 return new ResponseEntity<>(response, HttpStatus.CONFLICT);
             }
 

@@ -29,7 +29,8 @@ public class UserModel {
     @Column(length = 255, nullable = false)
     private String password;
 
-    public UserModel(String completeName, String username, String password) {
+    public UserModel(Long id, String completeName, String username, String password) {
+        this.id = id;
         this.completeName = completeName;
         this.username = username;
         this.password = password;

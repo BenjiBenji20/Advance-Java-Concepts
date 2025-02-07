@@ -1,4 +1,4 @@
-import { registrationView, authView } from '../view/view.js';
+import { registrationView, authView, defaultHomeview } from '../view/view.js';
 import { ServiceAPI } from '../service/service.js';
 
 /**
@@ -20,7 +20,7 @@ export function registrationFormController() {
     try {
       const result = await ServiceAPI.registerUserService(userData);
   
-      if(result.message) {
+      if(result) {
         // successfull
         loginFormController();
         alert(result.message);
@@ -52,15 +52,38 @@ export function loginFormController() {
     };
     
     try {
-      const result = await ServiceAPI.authUserService(userData);
+      const result = await ServiceAPI.authUserService(userData); // get the data of user who logged in
+      const allUserData = await ServiceAPI.getAllUsersService(); // get all users data
 
       if(result.error) {
         // if there's no data
         alert(result.error);
       } 
       else {
+        alert('Login successfull!');
+
         console.log('Login successful!');
+        defaultHomeview(allUserData, result); // display home
       }
+    } 
+    catch (error) {
+      console.error("Error found: ", error);
+    }
+  });
+}
+
+/**
+ * SEARCH controller: TYPE
+ * It fetch data while typing and display fetched data to the suggestion
+ */
+export function searchTypeController() {
+  document.getElementById("search-form-js").addEventListener('submit', async(e) => {
+    e.preventDefault();
+
+    const keyword = document.getElementById("search-input-js").value.trim();
+
+    try {
+      const result = await ServiceAPI.searchUserService(keyword);
     } 
     catch (error) {
       console.error("Error found: ", error);

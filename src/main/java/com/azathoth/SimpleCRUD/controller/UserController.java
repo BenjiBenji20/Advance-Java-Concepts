@@ -204,8 +204,8 @@ public class UserController {
 
 
     // search users
-    @GetMapping("/user-list/search")
-    public ResponseEntity<?> searchUser(@RequestParam String keyword) {
+    @GetMapping("/search/{keyword}")
+    public ResponseEntity<?> searchUser(@PathVariable String keyword) {
         List<UserModel> userList = userService.searchUser(keyword);
 
         return new ResponseEntity<>(userList, HttpStatus.FOUND);

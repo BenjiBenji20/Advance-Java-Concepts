@@ -1,4 +1,4 @@
-import { registrationView, authView, defaultHomeview } from '../view/view.js';
+import { registrationView, authView, defaultHomeview, homeHeaderView } from '../view/view.js';
 import { ServiceAPI } from '../service/service.js';
 
 /**
@@ -61,15 +61,33 @@ export function loginFormController() {
       } 
       else {
         alert('Login successfull!');
-
-        console.log('Login successful!');
-        defaultHomeview(allUserData, result); // display home
+        homeHeaderView(result);
+        defaultHomeview(allUserData);
       }
     } 
     catch (error) {
       console.error("Error found: ", error);
     }
   });
+}
+
+/**
+ * Get all user's data
+ */
+export async function userTableController() {
+  try {
+    const allUserData = await ServiceAPI.getAllUsersService(); // get all users data
+
+    if(allUserData) {
+      defaultHomeview(allUserData);
+    } else {
+      console.log('BACK TO THE REGISTER PAGE')
+      loginFormController();
+    }
+  } 
+  catch (error) {
+    console.error("Error found: ", error);
+  }
 }
 
 /**
@@ -83,7 +101,15 @@ export function searchTypeController() {
     const keyword = document.getElementById("search-input-js").value.trim();
 
     try {
-      const result = await ServiceAPI.searchUserService(keyword);
+
+      // if user deleted all input type characters, then it will render the default view
+      if(keyword.length === 0) {
+        const allUserData = await ServiceAPI.getAllUsersService(); // get all users data
+        defaultHomeview(allUserData);
+      }
+
+      const searchResult = await ServiceAPI.searchUserService(keyword);
+      defaultHomeview(searchResult);
     } 
     catch (error) {
       console.error("Error found: ", error);

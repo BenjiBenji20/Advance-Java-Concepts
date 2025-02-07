@@ -41,8 +41,13 @@ export function authView() {
     `;
 }
 
-export function renderHeader(userProfile) {
-  return `
+/**
+ * RENDER HOME
+ */
+let homeContent = '';
+
+export function homeHeaderView(userProfile) {
+  homeContent += `
     <nav class="navbar fixed-top bg-body-tertiary">
       <nav class="navbar bg-body-tertiary">
         <div class="container-fluid">
@@ -63,24 +68,8 @@ export function renderHeader(userProfile) {
   `;
 }
 
-export function defaultHomeview(userList, userProfile) {
-  let tableContent = '';
-
-  tableContent += renderHeader(userProfile);
-
-  tableContent += `
-    <h2>User Table</h2>
-        <ul class="responsive-table">
-          <li class="table-header">
-            <div class="header-col-1">User Id</div>
-            <div class="header-col-2">Complete Name</div>
-            <div class="header-col-3">Username</div>
-          </li>
-        
-  `;
-
-  userList.forEach(user => {
-    tableContent += `
+export function renderTable(user) {
+  return `
           <li class="table-row">
             <div class="col col-1">${user.id}</div>
             <div class="col col-2">${user.completeName}</div>
@@ -90,9 +79,24 @@ export function defaultHomeview(userList, userProfile) {
             </div>
           </li>
     `;
+}
+
+export function defaultHomeview(userList) {
+  homeContent += `
+    <h2>User Table</h2>
+        <ul class="responsive-table">
+          <li class="table-header">
+            <div class="header-col-1">User Id</div>
+            <div class="header-col-2">Complete Name</div>
+            <div class="header-col-3">Username</div>
+          </li>
+  `;
+
+  userList.forEach(user => {
+    homeContent += renderTable(user);
   });
 
-  tableContent += `</ul>`;
-  containerElement.innerHTML = tableContent;
+  homeContent += `</ul>`;
+  containerElement.innerHTML = homeContent;
 }
 

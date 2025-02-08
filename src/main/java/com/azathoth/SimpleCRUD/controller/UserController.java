@@ -152,7 +152,7 @@ public class UserController {
      * inside service layer
      *
      */
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete-my-account")
     public ResponseEntity<?> deleteUser(@RequestBody UserConfirmationSecurity deleteUser) {
         try {
             // check for user authentication
@@ -164,7 +164,7 @@ public class UserController {
             // validate for empty response
             if(authenticatedUser.isEmpty()) {
                 response.replace("error", "Invalid username or password");
-                return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+                return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
             }
 
             // pass request to the service layer
@@ -175,7 +175,7 @@ public class UserController {
 
             // send response based on whether the user is deleted in service layer
             return isUserDeleted ?
-                    new ResponseEntity<>(HttpStatus.NO_CONTENT) :
+                    new ResponseEntity<>(HttpStatus.OK) :
                     new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         catch(Exception e) {
@@ -208,6 +208,6 @@ public class UserController {
     public ResponseEntity<?> searchUser(@PathVariable String keyword) {
         List<UserModel> userList = userService.searchUser(keyword);
 
-        return new ResponseEntity<>(userList, HttpStatus.FOUND);
+        return new ResponseEntity<>(userList, HttpStatus.OK);
     }
 }

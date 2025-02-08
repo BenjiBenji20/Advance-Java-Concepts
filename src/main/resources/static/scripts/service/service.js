@@ -28,14 +28,16 @@ export class ServiceAPI {
   /**
    * delete specific user via username
    */
-  static async deleteUserService(confirmationUsername, confirmationPassword) {
+  static async deleteUserService(deleteUser) {
     const response = await fetch("http://localhost:8080/api/user/delete", {
       method: "DELETE",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(confirmationUsername, confirmationPassword)
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(deleteUser),
     });
-
-    return response.json();
+  
+    if (!response.ok) return false; // return false if request failed
+  
+    return response.status === 200 ? true : false; 
   }
 
   /**

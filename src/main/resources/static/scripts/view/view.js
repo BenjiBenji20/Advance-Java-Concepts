@@ -1,4 +1,6 @@
-import { registrationFormController, loginFormController } from "../controller/controller.js";
+import { registrationFormController, loginFormController,
+  deleteUserController
+ } from "../controller/controller.js";
 
 export const containerElement = document.querySelector('.container');
 
@@ -76,7 +78,7 @@ export function renderTable(user) {
             <div class="col col-2">${user.completeName}</div>
             <div class="col col-3">${user.username}</div>
             <div class="trash-icon">
-              <i class="bi bi-trash" title="delete this user"></i>
+              <i class="bi bi-trash" data-user-id="${user.id}" title="delete this user"></i>
             </div>
           </li>
     `;
@@ -99,6 +101,43 @@ export function defaultHomeView(userList) {
 
   homeContent += `</ul>`;
   containerElement.innerHTML = homeContent;
+
+  setTimeout(() => {
+    // event for user to be deleted
+    const deleteUSer = document.querySelectorAll('.bi-trash');
+
+    deleteUSer.forEach((del) => {
+      del.addEventListener('click', () => {
+        const userId = del.dataset.userId;
+        homeContent = ''; // reset home content
+        deleteUserController(userId);
+      });
+    });
+  }, 0);
+}
+
+export function inputConfirmationCredentials() {
+    return new Promise((resolve) => {
+        containerElement.innerHTML = `
+            <form id="confirmation-form-js">
+                <h3>Confirmation</h3>
+                <input type="text" id="confirmingUsername" placeholder="Username" required>
+                <div class="password-input">
+                    <input type="password" id="confirmingPassword" placeholder="Password" required>
+                    <i class="bi bi-eye"></i>
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        `;
+
+        document.getElementById("confirmation-form-js").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const confirmingUsername = document.getElementById("confirmingUsername").value;
+            const confirmingPassword = document.getElementById("confirmingPassword").value;
+
+            resolve({ confirmingUsername, confirmingPassword });
+        });
+    });
 }
 
 export function clearSuggestion() {

@@ -4,13 +4,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserConfirmationSecurity {
+    private Long id;
     private String confirmingUsername;
     private String confirmingPassword;
     private String completeName;
     private String username;
     private String password;
 
-    public UserConfirmationSecurity(String confirmingUsername, String confirmingPassword, String completeName, String username, String password) {
+    public UserConfirmationSecurity(Long id,  String confirmingUsername, String confirmingPassword, String completeName, String username, String password) {
+        this.id = id;
         this.confirmingUsername = confirmingUsername;
         this.confirmingPassword = confirmingPassword;
         this.completeName = completeName;
@@ -19,6 +21,10 @@ public class UserConfirmationSecurity {
     }
 
     public UserConfirmationSecurity(){}
+
+    public Long getId() {
+        return id;
+    }
 
     public String getConfirmingUsername() {
         return confirmingUsername.trim();
@@ -38,6 +44,10 @@ public class UserConfirmationSecurity {
 
     public String getCompleteName() {
         return completeName.trim();
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setCompleteName(String completeName) {

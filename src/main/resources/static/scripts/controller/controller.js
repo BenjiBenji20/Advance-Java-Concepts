@@ -1,6 +1,7 @@
 import { registrationView, authView, 
   defaultHomeView, homeHeaderView,
-  clearSuggestion, displaySearchSuggestion
+  clearSuggestion, displaySearchSuggestion,
+  inputConfirmationCredentials
 } from '../view/view.js';
 import { ServiceAPI } from '../service/service.js';
 
@@ -84,8 +85,8 @@ export async function userTableController() {
     if(allUserData) {
       defaultHomeView(allUserData);
     } else {
-      console.log('BACK TO THE REGISTER PAGE')
-      loginFormController();
+      const arr = [];
+      defaultHomeView(arr); // forward empty array
     }
   } 
   catch (error) {
@@ -150,4 +151,42 @@ export function searchController() {
       console.error("Error found: ", error);
     }
   });
+}
+
+export async function deleteUserController(userId) {
+  try {
+      // Collect user inputs for confirmation
+      const userData = await inputConfirmationCredentials();
+
+      // Find the user to delete
+      const allUserData = await ServiceAPI.getAllUsersService();
+      const userToDelete = allUserData.find(user => user.id === Number(userId));
+
+      if (!userToDelete) {
+          alert("User not found");
+          return false;
+      }
+
+      // Merge confirmation data with user data
+      const deleteUser = { ...userData, ...userToDelete };
+
+      // Call the delete service
+      const result = await ServiceAPI.deleteUserService(deleteUser);
+
+      if (!result) {
+          alert("Wrong credentials. User cannot be deleted");
+      } else {
+          alert("User deleted successfully");
+
+          // Fetch updated user list and re-render the table
+          const updatedUserData = await ServiceAPI.getAllUsersService();
+          const userProfile = await ServiceAPI.authUserService(userData);
+
+          homeHeaderView(userProfile);
+          defaultHomeView(updatedUserData);
+          return true;
+      }
+  } catch (error) {
+      console.error("Error found: ", error);
+  }
 }

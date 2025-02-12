@@ -19,6 +19,9 @@ public class PatientService {
     @Autowired
     private AuthenticationManager authManager;
 
+    @Autowired
+    private JWTService jwt;
+
     public PatientService(PatientRepository patientRepository) {
         this.patientRepository = patientRepository;
     }
@@ -31,7 +34,7 @@ public class PatientService {
         return patientRepository.save(patient);
     }
 
-    public Optional<Patient> verify(Patient patient) {
+    public Optional<String> verify(Patient patient) {
 
         Authentication auth =
                 authManager.authenticate(new UsernamePasswordAuthenticationToken(patient.getUsername(), patient.getPassword()));
@@ -39,7 +42,8 @@ public class PatientService {
         if(auth.isAuthenticated()) {
             Patient authenticatedPatient = patientRepository.findUserByUsername(patient.getUsername());
 
-            return Optional.of(authenticatedPatient);
+            //return Optional.of(authenticatedPatient);
+            return Optional.of(jwt.generateToken(patient.getUsername()));
         }
 
         return Optional.empty();

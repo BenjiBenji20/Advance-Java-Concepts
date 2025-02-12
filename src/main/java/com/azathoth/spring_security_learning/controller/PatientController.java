@@ -36,4 +36,9 @@ public class PatientController {
     public ResponseEntity<Patient> register(@RequestBody Patient patient) {
         return ResponseEntity.ok(patientService.register(patient));
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody Patient patient) {
+        return ResponseEntity.ok(patientService.verify(patient));
+    }
 }

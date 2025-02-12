@@ -20,7 +20,10 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) {
         try {
             httpSecurity.csrf(AbstractHttpConfigurer::disable) // this will disable the spring security login feature
-                    .authorizeHttpRequests(request -> request.anyRequest().authenticated()) // this will allow any request is authenticated
+                    .authorizeHttpRequests(request -> request
+                            .requestMatchers("api/patients/register", "api/patients/login")// not requiring default login
+                            .permitAll()
+                            .anyRequest().authenticated()) // this will allow any request is authenticated
                     .formLogin(Customizer.withDefaults())
                     .httpBasic(Customizer.withDefaults());
 

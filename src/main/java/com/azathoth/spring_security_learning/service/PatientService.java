@@ -34,18 +34,16 @@ public class PatientService {
         return patientRepository.save(patient);
     }
 
-    public Optional<String> verify(Patient patient) {
+    public Optional<?> verify(Patient patient) {
+        Authentication auth = authManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(
+                                patient.getUsername(), patient.getPassword()));
 
-        Authentication auth =
-                authManager.authenticate(new UsernamePasswordAuthenticationToken(patient.getUsername(), patient.getPassword()));
+        // Patient authenticatedPatient = patientRepository.findUserByUsername(patient.getUsername());
+        //return Optional.of(authenticatedPatient);
 
-        if(auth.isAuthenticated()) {
-            Patient authenticatedPatient = patientRepository.findUserByUsername(patient.getUsername());
+        System.out.println("The token: " + jwt.generateToken(patient.getUsername()));
 
-            //return Optional.of(authenticatedPatient);
-            return Optional.of(jwt.generateToken(patient.getUsername()));
-        }
-
-        return Optional.empty();
+        return Optional.of(jwt.generateToken(patient.getUsername()));
     }
 }

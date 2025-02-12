@@ -1,10 +1,10 @@
 package com.azathoth.spring_security_learning.controller;
 
 import com.azathoth.spring_security_learning.model.Patient;
+import com.azathoth.spring_security_learning.service.PatientService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,9 +14,11 @@ import java.util.List;
 @RequestMapping("/api/patients")
 public class PatientController {
     private final Patient patient;
+    private final PatientService patientService;
 
-    public PatientController(Patient patient) {
+    public PatientController(Patient patient, PatientService patientService) {
         this.patient = patient;
+        this.patientService = patientService;
     }
 
     @GetMapping("/list")
@@ -28,5 +30,10 @@ public class PatientController {
         );
 
         return patients;
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<Patient> register(@RequestBody Patient patient) {
+        return ResponseEntity.ok(patientService.register(patient));
     }
 }
